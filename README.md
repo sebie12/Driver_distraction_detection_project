@@ -6,7 +6,8 @@ Developed during a curricular internship at **[Sentilant](https://sentilant.com)
 
 > **TL;DR** — A hybrid CNN + BiLSTM model with FiLM speed conditioning, quantized to **0.68 MB TensorFlow Lite**, that flags driver distraction from raw IMU + GNSS streams. In on-road field tests (including unseen highway driving) **88.4% of the episodes it flagged were genuine distractions**, with no false positives on out-of-distribution data.
 
-![Model architecture](figures/architecture.png)
+![v14.5 model architecture](figures/architecture.png)
+<p align="center"><sub>The v14.5 architecture: per-stream Conv1D encoders, FiLM speed conditioning, multi-head attention + BiLSTM stack, and late fusion of device state.</sub></p>
 
 ---
 
@@ -30,16 +31,26 @@ Manual interaction with the phone while driving (handling/operating the device),
 
 A hybrid deep-learning architecture trained on **10-second windows** of multi-stream sensor data sampled at **16.67 Hz**.
 
+See the diagram above for the full graph. The data flows through one main path, with speed and device state joining as auxiliary inputs:
+
 ```
-   sensor streams ─► Conv1D encoders ─┐
-                                      ├─► FiLM conditioning (speed) ─► Conv1D refine
-   GNSS speed ──────────────────────┘            │
-                                                 ▼
-                                   MultiHeadAttention ─► BiLSTM stack
-                                                 │
-   device state ─► GlobalAvgPool ──── late fusion ┘
-                                                 ▼
-                                       Dense head ─► sigmoid (distraction)
+              sensor_data (166×11)
+                       │
+              Conv1D(64) ×2 + BN
+                       │
+   speed ───►   Gated FiLM  (γ⊙x + β)         ← speed modulates the sensor stream
+                       │
+               Conv1D(64) + BN
+                       │
+         Multi-Head Attention (4 heads)
+                       │
+            BiLSTM(64) ───► BiLSTM(32)
+                       │
+   device state ─► Concatenate (late fusion)  ← device state joins here
+                       │
+          Dense(32) ─► Dense(1) + sigmoid
+                       │
+                 P(distraction)
 ```
 
 1. **Per-stream Conv1D encoders** learn local motion morphology independently for each sensor stream.
