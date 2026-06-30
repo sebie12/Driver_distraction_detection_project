@@ -144,7 +144,7 @@ object ModelScanner {
 
             DynamicTfliteModelDefinition(
                 id = "${category.name.lowercase()}_$id",
-                displayName = "Modelo $id (${windowSeconds}s)",
+                displayName = "Model $id (${windowSeconds}s)",
                 version = "1.0",
                 category = category,
                 tfliteAssetPath = tflitePath,

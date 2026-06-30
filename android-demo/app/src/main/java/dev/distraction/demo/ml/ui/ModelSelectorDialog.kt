@@ -23,12 +23,12 @@ object ModelSelectorDialog {
         val checkedIndex = models.indexOfFirst { it.isSelected }.coerceAtLeast(0)
 
         AlertDialog.Builder(context)
-            .setTitle("Selecionar modelo")
+            .setTitle("Select model")
             .setSingleChoiceItems(titles, checkedIndex) { dialog, which ->
                 onSelected(models[which])
                 dialog.dismiss()
             }
-            .setNegativeButton("Cancelar", null)
+            .setNegativeButton("Cancel", null)
             .show()
     }
 }

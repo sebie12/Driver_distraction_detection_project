@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import dev.distraction.demo.ml.api.ModelInputs
 import dev.distraction.demo.ml.api.ModelRunner
-import dev.distraction.demo.ml.debug.ModelInputDumpManager
 import org.tensorflow.lite.Interpreter
 import java.io.File
 import java.io.FileOutputStream
@@ -59,7 +58,6 @@ class TFLiteMultiInputRunner(
         interp.runForMultipleInputsOutputs(inputArray, mapOf(0 to outputBuffer))
         
         val score = outputBuffer[0][0]
-        ModelInputDumpManager.dumpRun(assetPath, inputs, score)
         return score
     }
 

@@ -35,6 +35,16 @@ class InferenceStateStore(context: Context) {
         prefs.edit().clear().apply()
     }
 
+    fun saveWindowTiming(windowStartMillis: Long, windowDurationMillis: Long) {
+        prefs.edit()
+            .putLong(KEY_WINDOW_START_MS, windowStartMillis)
+            .putLong(KEY_WINDOW_DURATION_MS, windowDurationMillis)
+            .apply()
+    }
+
+    fun getWindowStartMillis(): Long = prefs.getLong(KEY_WINDOW_START_MS, 0L)
+    fun getWindowDurationMillis(): Long = prefs.getLong(KEY_WINDOW_DURATION_MS, 0L)
+
     fun getLastInference(): LastInferenceUi? {
         val modelId = prefs.getString(KEY_MODEL_ID, null) ?: return null
         val score = prefs.getFloat(KEY_SCORE, 0f)
@@ -63,5 +73,7 @@ class InferenceStateStore(context: Context) {
         private const val KEY_PREDICTED_CLASS = "predicted_class"
         private const val KEY_WINDOW_END_MS = "window_end_ms"
         private const val KEY_LAST_ERROR = "last_error"
+        private const val KEY_WINDOW_START_MS = "window_start_ms"
+        private const val KEY_WINDOW_DURATION_MS = "window_duration_ms"
     }
 }

@@ -38,9 +38,9 @@ class DistractionFeedbackActivity : Activity() {
         }
 
         AlertDialog.Builder(this)
-            .setTitle("Distração?")
-            .setMessage("Estavas distraído nos últimos 2.5 segundos?")
-            .setPositiveButton("Sim") { _, _ ->
+            .setTitle("Distraction?")
+            .setMessage("Were you distracted in the last 2.5 seconds?")
+            .setPositiveButton("Yes") { _, _ ->
                 responded = true
                 sendFeedback(true)
                 finish()
