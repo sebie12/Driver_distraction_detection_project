@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Never commit raw telemetry / proprietary data
+*.csv
+data/
+ft_data/
+trips/
+
+# OS
+.DS_Store

@@ -1,0 +1,45 @@
+{
+    "input_names": [
+        "sensor_data",
+        "device_data",
+        "speed_data"
+    ],
+    "output_names": [
+        "distraction"
+    ],
+    "threshold": 0.5015356540679932,
+    "window_seconds": 10,
+    "mode": "simple",
+    "version": "v14.5",
+    "sensor_features": [
+        "GYRO_mag",
+        "GYRO_v1",
+        "GYRO_v2",
+        "GYRO_v3",
+        "LINACC_mag",
+        "GAMEROT_angular_distance",
+        "GRAV_reorientation",
+        "GYRO_hf_ratio",
+        "GYRO_zcr",
+        "LINACC_hf_ratio",
+        "LINACC_zcr"
+    ],
+    "position_features": [],
+    "speed_features": [
+        "speed_mps"
+    ],
+    "accel_features": [],
+    "device_features": [
+        "ds_device_locked",
+        "ds_handsfree"
+    ],
+    "gamerot_features": [],
+    "training": {
+        "augmented": false,
+        "denoise": true,
+        "include_accel_flags": false,
+        "debias_peak_accel": false,
+        "include_instant_accel": true,
+        "seed": 42
+    }
+}
